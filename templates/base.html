@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GMAA Share! | Share your playlists</title>
+    <link rel='stylesheet' href='/static/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/static/css/bootstrap-glyphicons.css' />
+    <link rel='stylesheet' href='/static/css/cards.css' />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:500,400,300" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id='header'>
+    <div class="navbar">
+        <a class="navbar-brand" href="#">GMAA Playlist Sharing</a>
+        <ul class="nav navbar-nav">
+            <li><a href="{% url home_page %}">Home</a></li>
+            <li><a href="{% url about_page %}">About</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url add_playlist_form %}" id='btnaddplaylist'>Add
+                    Playlist</a></li>
+                <li class='dropdown'>
+                    <a href='#' class='dropdown-toggle'
+                       data-toggle='dropdown'>Settings <b class='caret'></b></a>
+                    <ul class='dropdown-menu'>
+                        <li><a href='{% url favorites_playlists_page %}'>Favorited</a></li>
+                        <li><a href='{% url user_playlists_page %}'>My playlists</a></li>
+                        <li><a href='/accounts/logout/'>Log out</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="/accounts/login/" >Sign in</a></li>
+                <li><a href="/accounts/register/" >Sign up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% block content %}
+
+{% endblock %}
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src='/static/js/bootstrap.js'></script>
+<script src='/static/js/gmaa.js'></script>
+</body>
+</html>

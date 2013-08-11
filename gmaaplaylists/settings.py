@@ -77,7 +77,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_DIR, 'data')
+    os.path.join(PROJECT_DIR, 'data'),
 )
 
 # List of finder classes that know how to find static files in
@@ -108,6 +108,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     "social_auth.context_processors.social_auth_by_type_backends"
+# )
+
 ROOT_URLCONF = 'gmaaplaylists.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -123,15 +127,19 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'south',
     'django_extensions',
+    'registration',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'apps.playlists',
 )
 
+
+ACCOUNT_ACTIVATION_DAYS=7
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -160,3 +168,9 @@ LOGGING = {
         },
     }
 }
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'testing@example.com'

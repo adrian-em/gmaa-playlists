@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class='row'>
+        <div class='col-lg-offset-4 col-lg-5'>
+            <form action='.' method="post" id='playlistform' name='playlistform'>
+                {% csrf_token %}
+
+                {{ playlist_form.as_p }}
+                <button type="submit" id='btnplaylistform' class="btn btn-primary">Save
+                    playlist</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

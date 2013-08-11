@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='cards-container'>
+{% for playlist in playlists %}
+<ul class="gNow" id="col1">
+    <li><div class="card">
+        <p class="card-title">{{ playlist.name }}
+            {% if user.is_authenticated %}
+                {% if playlist in favorites %}
+                    <span data-id={{ playlist.id }} class="glyphicon
+                    glyphicon-star
+                    favorite"></span>
+                {% else %}
+                    <span data-id={{ playlist.id }} class="glyphicon
+                    glyphicon-star-empty
+                    favorite"></span>
+                {% endif %}
+            {% endif %}
+        </p>
+
+        <p>{{ playlist.description }}</p>
+{#        <p><b>Tags:</b>#}
+{#            {% for tag in playlist.tags.all %}#}
+{#            {{ tag }},#}
+{##}
+{#            {% endfor %}</p>#}
+        <p><b>Genres:</b>
+        {% for genre in playlist.genre.all %}
+            {{ genre }},
+            {% endfor %}
+        </p>
+        <p class="url"><a href="{{ playlist.url }}">Go to playlist</a></p>
+    </div></li>
+    </ul>
+{% endfor %}
+</div>
+    <div class="pagination" id='pagination'>
+    <span class="step-links">
+        {% if playlists.has_previous %}
+            <a href="?page={{ playlists.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ playlists.number }} of {{ playlists.paginator.num_pages }}.
+        </span>
+
+        {% if playlists.has_next %}
+            <a href="?page={{ playlists.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+
+{% endblock %}
