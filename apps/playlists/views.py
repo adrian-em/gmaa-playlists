@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from apps.playlists.models import Genre, Playlist, UserProfile
-from apps.playlists.forms import PlaylistForm
+from apps.playlists.forms import PlaylistForm, FilterForm
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -115,6 +115,44 @@ def delete_playlist(request, playlistid):
             return HttpResponse('Deleted')
         else:
             return HttpResponse(status=403)
+
+
+def browse_page(request):
+
+    form = FilterForm()
+
+    return render_to_response('browse.html', {'form': form},
+                              RequestContext(request))
+
+
+@csrf_exempt
+def filter_page(request):
+
+    if request.method == "POST":
+        print request.POST
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            favorites = profile.favorites.all()
+        except TypeError:
+            favorites = {}
+        playlists_objects = Playlist.objects.filter(genre=int(request
+        .POST['genre']))\
+            .order_by(
+            '-id')
+        paginator = Paginator(playlists_objects, 9)
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
+
+        try:
+            playlists = paginator.page(page)
+        except (EmptyPage, InvalidPage):
+            playlists = paginator.page(paginator.num_pages)
+
+        return render_to_response('filtered.html', {'playlists': playlists,
+                                                 'favorites': favorites},
+                                  RequestContext(request))
 
 
 

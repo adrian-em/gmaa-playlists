@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'apps.playlists.views.index_page', name='home_page'),
+    url(r'^browse/$', 'apps.playlists.views.browse_page', name='browse_page'),
+    url(r'^filter/$', 'apps.playlists.views.filter_page', name='filter_page'),
     url(r'^user/playlists/$', 'apps.playlists.views.user_playlists_page',
         name='user_playlists_page'),
     url(r'^user/favorites/$', 'apps.playlists.views.favorites_playlists_page',

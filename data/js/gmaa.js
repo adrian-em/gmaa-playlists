@@ -42,6 +42,16 @@ $(document).ready(function() {
             });
     });
 
+    $('.helptext').hide();
+
+    $('#btnfilter').click(function (e) {
+        e.preventDefault();
+        $.post('/filter/', $('#filterform').serialize(), function (data) {
+        }).success(function (data) {
+                document.getElementById('results').innerHTML = data;
+            })
+    });
+
 
 
 });

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class='row'>
+        <div class='col-lg-offset-4 col-lg-5'>
+            <form action='.' method="post" id='filterform'
+                  name='filterform'>
+                {% csrf_token %}
+
+                {{ form.as_p }}
+                <button type="submit" id='btnfilter' class="btn
+                btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id='results'>
+
+    </div>
+{% endblock %}
