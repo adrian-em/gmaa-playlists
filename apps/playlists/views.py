@@ -42,6 +42,7 @@ def add_playlist_form(request):
             form = playlist_form.save(commit=False)
             form.user = request.user
             form.save()
+            playlist_form.save_m2m()
             return HttpResponseRedirect('/')
     else:
         playlist_form = PlaylistForm()
