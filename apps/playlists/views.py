@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
+from django.contrib.auth.decorators import login_required
 
 
 def index_page(request):
@@ -34,6 +35,7 @@ def index_page(request):
                               RequestContext(request))
 
 
+@login_required
 def add_playlist_form(request):
     if request.method == "POST":
         playlist_form = PlaylistForm(request.POST)
@@ -51,7 +53,7 @@ def add_playlist_form(request):
                               {'playlist_form': playlist_form},
                               RequestContext(request))
 
-
+@login_required
 def user_playlists_page(request):
 
     playlists_objects = Playlist.objects.filter(user=request.user).order_by(
@@ -71,7 +73,7 @@ def user_playlists_page(request):
     return render_to_response('user_playlists.html', {'playlists': playlists},
                               RequestContext(request))
 
-
+@login_required
 def favorites_playlists_page(request):
 
     profile = UserProfile.objects.get(user=request.user)
@@ -91,6 +93,7 @@ def favorites_playlists_page(request):
                               RequestContext(request))
 
 
+@login_required
 @csrf_exempt
 def favorite_unfavorite_playlist(request, fav, playlistid):
 
@@ -106,6 +109,7 @@ def favorite_unfavorite_playlist(request, fav, playlistid):
         return HttpResponse(resp, mimetype='application/json')
 
 
+@login_required
 @csrf_exempt
 def delete_playlist(request, playlistid):
 
@@ -116,6 +120,7 @@ def delete_playlist(request, playlistid):
             return HttpResponse('Deleted')
         else:
             return HttpResponse(status=403)
+
 
 
 def browse_page(request):
